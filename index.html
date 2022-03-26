@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<title>Football stats</title>
+</head>
+<body>
+	<nav>
+		<a class="active" href="#home">Home</a>
+		<a href="#news">Sources</a>
+	</nav>
+    <div class="thumbnail">
+		<p class="header">Football Stats</p>
+		<img id="img-desktop" src="assets/pitch-desktop.png" alt="Football field">
+		<button onclick="newGame()" class="new-game-btn">New game</button>
+    </div>
+	<div class="add-teams">
+		<span onclick="closeAddTeams()" class="close-modal">&times;</span>
+		<p class="big-text-top">Add teams</p>
+		<form onsubmit="openCurrentScore()">
+			<label for="team1">Home team:</label><br>
+			<input type="text" id="team1" name="team1"><br>
+			<label for="team2">Away team:</label><br>
+			<input type="text" id="team2" name="team2"><br><br>
+			<input type="submit" value="Submit">
+		</form> 
+	</div>
+	<div class="current-score">
+		<span onclick="closeCurrentScore()" class="close-modal">&times;</span>
+		<span onclick="showEditModal()" class="edit">&#x270E;</span>
+		<p class="big-text-top">Current score:</p>
+		<p id="score">a</p>
+		<div class="buttons-container">
+			<button class="small-btn" onclick="showGoalModal()">Goal</button>
+			<button class="small-btn" onclick="showShotModal()">Shot</button>
+			<button class="small-btn" onclick="showCornerModal()">Corner</button>
+		</div>
+
+		<button class="big-btn" onclick="finishGame()">Finish game</button>
+	</div>
+	<!-- Modals -->
+	<div id="goalModal" class="modal">
+		<div class="modal-content">
+		<span class="close-modal close-goal">&times;</span>
+		<p class="big-text">Goal</p>
+		<form onsubmit="goalModalSubmit()">
+			<label for="teams">Team:</label><br>
+			<select name="teams" id="teamGoals">
+				<option id="goalTeam1" value="1"></option>
+				<option id="goalTeam2" value="2"></option>
+			</select><br>
+			<label for="scorer">Scorer:</label><br>
+			<input type="text" id="scorer" name="scorer"><br><br>
+			<label for="assist">Assist:</label><br>
+			<input type="text" id="assist" name="assist"><br><br>
+			<input type="submit" value="Submit">
+		  </form> 
+		</div>
+	</div>
+
+	<div id="shotModal" class="modal">
+		<div class="modal-content">
+		<span class="close-modal close-shot">&times;</span>
+		<p class="big-text">Shot</p>
+		<form onsubmit="shotModalSubmit()">
+			<label for="teams">Team:</label><br>
+			<select name="teams" id="teamShots">
+				<option id="shotTeam1" value="1"></option>
+				<option id="shotTeam2" value="2"></option>
+			</select><br>
+			<label for="player">Player:</label><br>
+			<input type="text" id="player" name="player"><br><br>
+			<input type="submit" value="Submit">
+		</form> 
+		</div>
+	</div>
+
+	<div id="cornerModal" class="modal">
+		<div class="modal-content">
+		<span class="close-modal close-corner">&times;</span>
+		<form onsubmit="cornerModalSubmit()">
+			<label for="teams">Corner:</label><br>
+			<select name="teams" id="teamCorners">
+				<option id="cornerTeam1" value="1"></option>
+				<option id="cornerTeam2" value="2"></option>
+			</select><br><br>
+			<input type="submit" value="Submit">
+		</form> 
+		</div>
+	</div>
+
+	<div id="editModal" class="modal">
+		<div class="modal-content">
+		<span class="close-modal close-edit">&times;</span>
+		<p class="big-text">Edit</p>
+		<form onsubmit="editModalSubmit()">
+			<div class="edit-row">
+				<div>
+					<p id="edit-team1"></p>
+					<label for="team1-goals">Goals:</label><br>
+					<input type="number" min="0" id="team1-goals" name="team1-goals"><br>
+					<label for="team1-shots">Shots:</label><br>
+					<input type="number" min="0" id="team1-shots" name="team1-shots"><br>
+					<label for="team1-corners">Corners::</label><br>
+					<input type="number" min="0" id="team1-corners" name="team1-corners"><br><br>
+				</div>
+				<div>
+					<p id="edit-team2"></p>
+					<label for="team2-goals">Goals:</label><br>
+					<input type="number" min="0" id="team2-goals" name="team2-goals"><br>
+					<label for="team2-shots">Shots:</label><br>
+					<input type="number" min="0" id="team2-shots" name="team2-shots"><br>
+					<label for="team2-corners">Corners::</label><br>
+					<input type="number" min="0" id="team2-corners" name="team2-corners"><br><br>
+				</div>
+			</div>
+			<input type="submit" value="Submit">
+		</form> 
+		</div>
+	</div>
+
+	<div id="editMatchModal" class="modal">
+		<div class="modal-content">
+		<span class="close-modal close-edit-match">&times;</span>
+		<p class="big-text">Edit</p>
+		<form id="editMatch">
+			<div class="edit-row">
+				<div>
+					<p id="match-edit-team1"></p>
+					<label for="match-team1-goals">Goals:</label><br>
+					<input type="number" min="0" id="match-team1-goals" name="match-team1-goals"><br>
+					<label for="match-team1-shots">Shots:</label><br>
+					<input type="number" min="0" id="match-team1-shots" name="match-team1-shots"><br>
+					<label for="match-team1-corners">Corners::</label><br>
+					<input type="number" min="0" id="match-team1-corners" name="match-team1-corners"><br><br>
+				</div>
+				<div>
+					<p id="match-edit-team2"></p>
+					<label for="match-team2-goals">Goals:</label><br>
+					<input type="number" min="0" id="match-team2-goals" name="match-team2-goals"><br>
+					<label for="match-team2-shots">Shots:</label><br>
+					<input type="number" min="0" id="match-team2-shots" name="match-team2-shots"><br>
+					<label for="match-team2-corners">Corners::</label><br>
+					<input type="number" min="0" id="match-team2-corners" name="match-team2-corners"><br><br>
+				</div>
+			</div>
+			<input type="hidden" id="match-id" name="match-id">
+			<input type="submit" value="Submit">
+		</form> 
+		</div>
+	</div>
+
+	<div class="matches-container">
+		<p class="big-text-history">Matches</p>
+		<div class="matches-row">
+			<div id="history">
+
+			</div>
+			<div id="stats">
+				<div>
+					<p>Shots</p>
+					<div id="shots-text">
+						<p id="home-text"><p>
+						<p id="away-text"></p>
+					</div>
+					<div id="shots-analysis">
+						<div id="home">
+						</div>
+						<div id="away">
+						</div>
+					</div>
+				</div>
+				<p id="corners-pie">Corners</p>
+				<div id="pie-chart-container">
+					<div>
+						<div class="corners-ratio">
+							<p id="home-corners"></p>
+							<p id="middle">:</p>
+							<p id="away-corners"></p>
+						</div>
+						<div id="pie-chart"></div>
+					</div>
+
+					<div id="legenda">
+						<div class="entry">
+						  <div id="color-home" class="entry-color"></div>
+						  <div class="entry-text" id="home-legend"></div>
+						</div>
+						<div class="entry">
+						  <div id="color-away" class="entry-color"></div>
+						  <div class="entry-text" id="away-legend"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		Football stats &copy; | Owner @lenartgolob
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="scripts/script.js"></script>
+</body>
+</html>

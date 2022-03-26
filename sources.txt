@@ -1,0 +1,5 @@
+Navigation menu: https://www.w3schools.com/howto/howto_js_topnav.asp
+form design: https://www.w3schools.com/css/css_form.asp
+modals: https://www.w3schools.com/howto/howto_css_modals.asp
+pie-chart: https://dev.to/cscarpitta/build-a-simple-pie-chart-with-html-and-css-32dn
+footer at the bottom if page not full: https://stackoverflow.com/questions/643879/css-to-make-html-page-footer-stay-at-bottom-of-the-page-with-a-minimum-height-b
